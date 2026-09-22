@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCourierRequest;
+use App\Http\Requests\UpdateCourierRequest;
+use App\Http\Resources\CourierResource;
 use App\Models\Courier;
 use Illuminate\Http\Request;
-use App\Http\Resources\CourierResource;
 
 class CourierController extends Controller
 {
     public function index(Request $request)
     {
+        // dd($request->all());
         $query = Courier::query();
 
         if ($request->filled('search')) {

@@ -12,7 +12,7 @@ class UpdateCourierRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,22 +23,21 @@ class UpdateCourierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'                  => ['required', 'string', 'max:255'],
+            'name'                  => ['sometimes', 'string', 'max:255'],
             'email'                 => [
-                'required', 
-                'email', 
-                'max:255', 
-                'unique:couriers,email',
-                Rule::unique('couriers')->ignore($this->route('courier'))
-                ],
-            'phone'                 => ['required', 'string', 'max:20'],
-            'level'                 => ['required', 'integer', 'between:1,5'],
+                'sometimes',
+                'email',
+                'max:255',
+                Rule::unique('couriers')->ignore($this->route('courier')),
+            ],
+            'phone'                 => ['sometimes', 'string', 'max:20'],
+            'level'                 => ['sometimes', 'integer', 'between:1,5'],
             'vehicle_type'          => ['nullable', 'string', 'max:50'],
             'vehicle_plate_number'  => ['nullable', 'string', 'max:20'],
             'license_number'        => ['nullable', 'string', 'max:50'],
             'address'               => ['nullable', 'string'],
             'status'                => ['nullable', 'in:active,inactive,suspended'],
-            'joined_at'             => ['required', 'date'],
+            'joined_at'             => ['sometimes', 'date'],
         ];
     }
 }
